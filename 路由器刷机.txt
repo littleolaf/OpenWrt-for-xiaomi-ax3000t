@@ -1,0 +1,55 @@
+AX3000T SSH
+参考教程：
+	https://www.bilibili.com/video/BV1dj411h7EP
+	https://www.bilibili.com/video/BV16Q4y1n7Je
+打开SSH：
+curl -X POST http://192.168.31.1/cgi-bin/luci/;stok=58e0aa0e3efce36a716f281427bc7607/api/misystem/arn_switch -d "open=1&model=1&level=%0Anvram%20set%20ssh_en%3D1%0A"
+
+curl -X POST http://192.168.31.1/cgi-bin/luci/;stok=58e0aa0e3efce36a716f281427bc7607/api/misystem/arn_switch -d "open=1&model=1&level=%0Anvram%20commit%0A"
+
+curl -X POST http://192.168.31.1/cgi-bin/luci/;stok=58e0aa0e3efce36a716f281427bc7607/api/misystem/arn_switch -d "open=1&model=1&level=%0Ased%20-i%20's%2Fchannel%3D.*%2Fchannel%3D%22debug%22%2Fg'%20%2Fetc%2Finit.d%2Fdropbear%0A"
+
+curl -X POST http://192.168.31.1/cgi-bin/luci/;stok=58e0aa0e3efce36a716f281427bc7607/api/misystem/arn_switch -d "open=1&model=1&level=%0A%2Fetc%2Finit.d%2Fdropbear%20start%0A"
+
+curl -X POST http://192.168.31.1/cgi-bin/luci/;stok=58e0aa0e3efce36a716f281427bc7607/api/misystem/arn_switch -d "open=1&model=1&level=%0Apasswd+-d+root+password%0A"
+
+计算ssh密码
+https://miwifi.dev/ssh
+SN：49850/F4QQ63879
+password：1bfd3367
+
+添加uboot系统文件
+	ssh连接路由器
+	将解压的文件传入/tmp/
+
+如需要回原厂 先备份dd if=/dev/mtd8 of=/tmp/8.bin
+
+刷入uboot
+	mtd write mt7981_ax3000t-fip-fixed-parts-multi-layout.bin FIP
+
+添加qwrt固件
+	后台：192.168.1.1
+添加openwrt固件
+	后台: 192.168.1.1  密码: root
+
+刷完之后登录路由器
+	qwrt：
+		默认IP： 192.168.1.1 ， 用户名密码： root/password
+	openwrt：
+		后台: 192.168.1.1  用户名与密码: root
+
+
+更新openwrt固件的软件包opkg的镜像源
+src/gz openwrt_core https://mirrors.tuna.tsinghua.edu.cn/openwrt/23.05/targets/mediatek/filogic/6.6.32
+src/gz openwrt_base https://mirrors.tuna.tsinghua.edu.cn/openwrt/23.05/packages/aarch64_cortex-a53/base
+src/gz openwrt_packages https://mirrors.tuna.tsinghua.edu.cn/openwrt/23.05/packages/aarch64_cortex-a53/packages
+src/gz openwrt_luci https://mirrors.tuna.tsinghua.edu.cn/openwrt/23.05/packages/aarch64_cortex-a53/luci
+src/gz openwrt_routing https://mirrors.tuna.tsinghua.edu.cn/openwrt/23.05/packages/aarch64_cortex-a53/routing
+src/gz openwrt_kiddin9 https://dl.openwrt.ai/23.05/packages/aarch64_cortex-a53/kiddin9
+新的镜像源：
+src/gz openwrt_core https://archive.openwrt.org/releases/23.05.0/targets/mediatek/filogic/packages/
+src/gz openwrt_base https://archive.openwrt.org/releases/23.05.0/packages/aarch64_cortex-a53/base
+src/gz openwrt_packages https://archive.openwrt.org/releases/23.05.0/packages/aarch64_cortex-a53/packages
+src/gz openwrt_luci https://archive.openwrt.org/releases/23.05.0/packages/aarch64_cortex-a53/luci
+src/gz openwrt_routing https://archive.openwrt.org/releases/23.05.0/packages/aarch64_cortex-a53/routing
+src/gz openwrt_telephony https://archive.openwrt.org/releases/packages-23.05/aarch64_cortex-a53/telephony
